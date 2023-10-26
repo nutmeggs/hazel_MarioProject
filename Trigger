@@ -1,0 +1,51 @@
+using UnityEngine;
+using System.Collections;
+using UnityEngine.Tilemaps;
+
+public class Trigger : MonoBehaviour
+{
+
+    private Rigidbody2D rb; // Store a reference to the Rigidbody2D component
+
+    private void Start()
+    {
+        rb = GetComponent<Rigidbody2D>(); // Get the Rigidbody2D component
+    }
+
+    private void OnTriggerEnter2D(Collider2D hit)
+    {
+        //when the platform touches a player, the collider will disable. 
+        //this doesn't work because it identifies the player, not the TopCollider
+        //the script will work better if on the player, not the platform. 
+        //change Player to TopTrigger if assigning this to the platform
+        if (hit.CompareTag("Player"))
+        {
+            Physics2D.IgnoreCollision(GetComponent<Collider2D>(), hit.GetComponent<Collider2D>(), true);
+        }
+        //debugging
+        if (hit.CompareTag("TopTrigger"))
+        {
+            Debug.Log("Player entered TopTrigger");
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D hit)
+    {
+        //change to BottomTrigger not player.
+        if (hit.CompareTag("Player"))
+        {
+            Physics2D.IgnoreCollision(GetComponent<Collider2D>(), hit.GetComponent<Collider2D>(), false);
+        }
+        //debugging
+        if (hit.CompareTag("BottomTrigger"))
+        {
+            Debug.Log("Player exited BottomTrigger");
+        }
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
+}
