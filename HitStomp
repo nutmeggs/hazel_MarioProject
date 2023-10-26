@@ -1,0 +1,25 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class StompHit : MonoBehaviour
+{
+
+    //the y displacement
+    public float bounce;
+
+    //referencing the players rigidbody to reset when jumping on an enemy.
+    //also used for the x value
+    public Rigidbody2D rb2D;
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Enemy"))
+        {
+           Destroy (other.gameObject);
+            rb2D.velocity = new Vector2(rb2D.velocity.x, bounce);
+        }
+
+    }
+
+}
